@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.productHome.ProductHomeActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout_product_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
+
+        <ImageView
+            android:id="@+id/imageView_product_activity_image"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
+            android:src="@drawable/no_product"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="12dp"
+            android:paddingStart="12dp">
+
+            <TextView
+                android:id="@+id/textView_product_activity_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:text="Product Name"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:fontFamily="@font/roboto_bold"/>
+
+            <TextView
+                android:id="@+id/textView_product_activity_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:text="Product ID"
+                android:textSize="12sp"
+                android:fontFamily="@font/roboto"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:layout_below="@+id/linearLayout_product_info">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Location"
+            android:textColor="@color/colorPrimary"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="7dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Available Product"
+            android:textColor="@color/colorPrimary"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/textView_r"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="11dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Requested Product"
+            android:textColor="@color/colorPrimary"
+            android:textSize="11sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/colorPrimary"
+            android:layout_below="@+id/textView_r"/>
+
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView_product_management"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button_add_to_cart"
+        android:layout_below="@+id/relativeLayout_info"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="0dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"/>
+
+    <android.support.design.button.MaterialButton
+        android:id="@+id/button_add_to_cart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/button_issue_now"
+        app:icon="@drawable/ic_check_white_24dp"
+        app:iconGravity="textStart"
+        android:text="Add to cart" />
+
+    <android.support.design.button.MaterialButton
+        android:id="@+id/button_issue_now"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:icon="@drawable/double_tick_indicator"
+        app:iconGravity="textStart"
+        android:text="Issue Now" />
+
+
+</RelativeLayout>
