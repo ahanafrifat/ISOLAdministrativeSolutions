@@ -20,8 +20,8 @@ import java.util.List;
 
 public class RecyclerAdapterProductLibrary extends RecyclerView.Adapter<RecyclerAdapterProductLibrary.ProductViewHolder>{
 
-    List<Product> productList;
-    Context context;
+    private List<Product> productList;
+    private Context context;
     private IRecyclerAdapterProductLibrary iRecyclerAdapterProductLibrary;
 
     public RecyclerAdapterProductLibrary(List<Product> productList, Context context, IRecyclerAdapterProductLibrary iRecyclerAdapterProductLibrary) {

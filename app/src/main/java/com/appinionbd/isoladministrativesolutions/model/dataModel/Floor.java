@@ -3,20 +3,27 @@ package com.appinionbd.isoladministrativesolutions.model.dataModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class FloorList {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+public class Floor {
 
     @SerializedName("floor_id")
     @Expose
     private String floorId;
+    @SerializedName("floor_no")
+    @Expose
+    private String floorNo;
     @SerializedName("quantity")
     @Expose
     private String quantity;
 
-    public FloorList() {
+    public Floor() {
     }
 
-    public FloorList(String floorId, String quantity) {
+    public Floor(String floorId, String floorNo, String quantity) {
         this.floorId = floorId;
+        this.floorNo = floorNo;
         this.quantity = quantity;
     }
 
@@ -26,6 +33,14 @@ public class FloorList {
 
     public void setFloorId(String floorId) {
         this.floorId = floorId;
+    }
+
+    public String getFloorNo() {
+        return floorNo;
+    }
+
+    public void setFloorNo(String floorNo) {
+        this.floorNo = floorNo;
     }
 
     public String getQuantity() {

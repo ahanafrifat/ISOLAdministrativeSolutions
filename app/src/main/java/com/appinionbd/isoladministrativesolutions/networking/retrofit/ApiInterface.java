@@ -4,8 +4,11 @@ import com.appinionbd.isoladministrativesolutions.model.dataModel.APIAuth;
 import com.appinionbd.isoladministrativesolutions.model.dataModel.LoginAuth;
 import com.appinionbd.isoladministrativesolutions.model.dataModel.LoginCredential;
 import com.appinionbd.isoladministrativesolutions.model.dataModel.ProductLibrary;
+import com.appinionbd.isoladministrativesolutions.model.dataModel.SearchItem;
+import com.appinionbd.isoladministrativesolutions.model.dataModel.SingleProductFloorList;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -30,4 +33,9 @@ public interface ApiInterface {
 
     @GET("/isol_inventory/api/product/product_library")
     Call<ProductLibrary> productLibraryCall(@Header("token") String token );
+
+    @Headers("Content-Type: application/json")
+    @POST("/isol_inventory/api/product/floor_list")
+    Call<SingleProductFloorList> singleProductFloorListCall(@Header("token") String token,
+                                                            @Body SearchItem searchItem);
 }

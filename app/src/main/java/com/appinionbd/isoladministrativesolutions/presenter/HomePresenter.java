@@ -17,7 +17,8 @@ import io.realm.Realm;
 
 
 public class HomePresenter implements IHome.Presenter {
-    IHome.View view;
+
+    private IHome.View view;
 
     public HomePresenter() {
     }
@@ -30,7 +31,7 @@ public class HomePresenter implements IHome.Presenter {
     public void getRefreshData() {
         try {
             Handler handler = new Handler();
-            handler.postDelayed(() -> getData(), 1000);
+            handler.postDelayed(() -> getData(), 100);
         }
         catch (Exception e){
             AppUtil.log("HomePresenter" , "HomePresenter : " + e.getMessage());

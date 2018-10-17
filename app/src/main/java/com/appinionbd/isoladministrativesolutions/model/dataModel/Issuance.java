@@ -10,18 +10,12 @@ public class Issuance {
     @SerializedName("user_id")
     @Expose
     private String userId;
-    @SerializedName("issue_date")
-    @Expose
-    private String issueDate;
     @SerializedName("vendor_name")
     @Expose
     private String vendorName;
     @SerializedName("remark")
     @Expose
     private String remark;
-    @SerializedName("attatchment")
-    @Expose
-    private String attatchment;
     @SerializedName("item_list")
     @Expose
     private List<ItemList> itemList = null;
@@ -29,12 +23,10 @@ public class Issuance {
     public Issuance() {
     }
 
-    public Issuance(String userId, String issueDate, String vendorName, String remark, String attatchment, List<ItemList> itemList) {
+    public Issuance(String userId, String vendorName, String remark, List<ItemList> itemList) {
         this.userId = userId;
-        this.issueDate = issueDate;
         this.vendorName = vendorName;
         this.remark = remark;
-        this.attatchment = attatchment;
         this.itemList = itemList;
     }
 
@@ -44,14 +36,6 @@ public class Issuance {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public String getIssueDate() {
-        return issueDate;
-    }
-
-    public void setIssueDate(String issueDate) {
-        this.issueDate = issueDate;
     }
 
     public String getVendorName() {
@@ -68,14 +52,6 @@ public class Issuance {
 
     public void setRemark(String remark) {
         this.remark = remark;
-    }
-
-    public String getAttatchment() {
-        return attatchment;
-    }
-
-    public void setAttatchment(String attatchment) {
-        this.attatchment = attatchment;
     }
 
     public List<ItemList> getItemList() {
