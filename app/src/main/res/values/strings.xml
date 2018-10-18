@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">ISOL Administrative Solutions</string>
+
+    <string name="ok">OK</string>
+    <string name="low_storage_error">Low Storage Error</string>
+    <string name="no_camera_permission">No Camera Permission</string>
+    <string name="permission_camera_rationale">Access to the camera is needed for detection</string>
+    <string name="barcode_success">Barcode read successfully</string>
+    <string name="barcode_failure">No barcode captured</string>
+    <string name="barcode_error">"Error reading barcode: %1$s"</string>
+
 </resources>

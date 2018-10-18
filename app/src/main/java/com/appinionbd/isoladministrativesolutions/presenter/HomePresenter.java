@@ -8,12 +8,14 @@ import com.appinionbd.isoladministrativesolutions.interfaces.presenterInterface.
 import com.appinionbd.isoladministrativesolutions.model.dataHolder.UserToken;
 import com.appinionbd.isoladministrativesolutions.model.dataModel.Product;
 import com.appinionbd.isoladministrativesolutions.model.dataModel.ProductLibrary;
+import com.appinionbd.isoladministrativesolutions.model.dataModel.UserInfo;
 import com.appinionbd.isoladministrativesolutions.networking.syncAppData.SyncAppData;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 
 
 public class HomePresenter implements IHome.Presenter {
@@ -95,5 +97,20 @@ public class HomePresenter implements IHome.Presenter {
                 view.networkError(error);
             }
         });
+    }
+
+    @Override
+    public void proceedToLogout() {
+        try (Realm realm = Realm.getDefaultInstance()) {
+
+            realm.executeTransaction(realm1 -> {
+                RealmResults<UserInfo> userInfos = realm1.where(UserInfo.class).findAll();
+                RealmResults<UserToken> userTokens = realm1.where(UserToken.class).findAll();
+                userInfos.deleteAllFromRealm();
+                userTokens.deleteAllFromRealm();
+            });
+        }
+
+        view.logoutSuccessful();
     }
 }

@@ -66,24 +66,27 @@ public class ProductFloorPresenter implements IProductHome.Presenter {
 
                 List<FloorSaved> floorSaveds = new ArrayList<>();
 
-                for(Floor floor:singleProductFloorList.getFloor()){
+                if(singleProductFloorList.getStatus() == 200) {
 
-                    FloorSaved floorSaved = new FloorSaved();
 
-                    floorSaved.setId( itemId + "_" + floor.getFloorId() );
-                    floorSaved.setFloorId( floor.getFloorId() );
-                    floorSaved.setItemId(itemId);
-                    floorSaved.setQuantity(floor.getQuantity());
-                    floorSaved.setFloorNo(floor.getFloorNo());
+                    for (Floor floor : singleProductFloorList.getFloor()) {
 
-                    try(Realm realm = Realm.getDefaultInstance() ){
-                        realm.executeTransaction(realm1 -> {
-                            realm1.insertOrUpdate(floorSaved);
-                        });
+                        FloorSaved floorSaved = new FloorSaved();
+
+                        floorSaved.setId(itemId + "_" + floor.getFloorId());
+                        floorSaved.setFloorId(floor.getFloorId());
+                        floorSaved.setItemId(itemId);
+                        floorSaved.setQuantity(floor.getQuantity());
+                        floorSaved.setFloorNo(floor.getFloorNo());
+
+                        try (Realm realm = Realm.getDefaultInstance()) {
+                            realm.executeTransaction(realm1 -> {
+                                realm1.insertOrUpdate(floorSaved);
+                            });
+                        }
+
+                        floorSaveds.add(floorSaved);
                     }
-
-                    floorSaveds.add(floorSaved);
-                }
 
 //                for(Floor floor:singleProductFloorList.getFloor()){
 //
@@ -109,7 +112,11 @@ public class ProductFloorPresenter implements IProductHome.Presenter {
 //                    }
 //                }
 
-                view.showProductFloor(floorSaveds);
+                    view.showProductFloor(floorSaveds);
+                }
+                else{
+                    view.emptyProductFloor("No floor found");
+                }
             }
 
             @Override

@@ -1,9 +1,16 @@
 package com.appinionbd.isoladministrativesolutions.view.login;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.support.design.button.MaterialButton;
+import android.support.design.widget.TextInputEditText;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -13,14 +20,16 @@ import com.appinionbd.isoladministrativesolutions.model.dataModel.UserInfo;
 import com.appinionbd.isoladministrativesolutions.presenter.LoginPresenter;
 import com.appinionbd.isoladministrativesolutions.view.home.HomeActivity;
 
+import java.util.Objects;
+
 import es.dmoral.toasty.Toasty;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 public class LoginActivity extends AppCompatActivity implements ILogin.View{
 
-    private EditText editTextUsername;
-    private EditText editTextPassword;
+    private TextInputEditText textInputEditTextUsername;
+    private TextInputEditText textInputEditTextPassword;
     private MaterialButton buttonLogin;
 
     ILogin.Presenter loginPresenter;
@@ -44,13 +53,20 @@ public class LoginActivity extends AppCompatActivity implements ILogin.View{
     protected void onStart() {
         super.onStart();
 
-        editTextUsername = findViewById(R.id.editText_username);
-        editTextPassword = findViewById(R.id.editText_password);
+        textInputEditTextUsername = findViewById(R.id.textInputEditText_username);
+        textInputEditTextPassword = findViewById(R.id.textInputEditText_password);
 
         buttonLogin = findViewById(R.id.button_login);
         buttonLogin.setOnClickListener(v ->
-                        loginPresenter.loginVerification(editTextUsername.getText().toString() , editTextPassword.getText().toString())
+                {
+                    if(isNetworkConnected()) {
+                        loginPresenter.loginVerification(textInputEditTextUsername.getText().toString(), textInputEditTextPassword.getText().toString());
 //                gotoMainActivity()
+                    }
+                    else{
+                        showAlertDialogNetworkError();
+                    }
+                }
         );
 
     }
@@ -78,7 +94,7 @@ public class LoginActivity extends AppCompatActivity implements ILogin.View{
 
     @Override
     public void connectionError() {
-        Toasty.error(this ,"Connection Error!" , Toast.LENGTH_LONG , true).show();
+        Toasty.error(this ,"Network Error!" , Toast.LENGTH_LONG , true).show();
     }
 
     @Override
@@ -94,5 +110,29 @@ public class LoginActivity extends AppCompatActivity implements ILogin.View{
     private void gotoMainActivity() {
         Intent intent = new Intent(this , HomeActivity.class);
         startActivity(intent);
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) Objects.requireNonNull(this).getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert cm != null;
+        return cm.getActiveNetworkInfo() != null;
+    }
+
+    private void showAlertDialogNetworkError() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        Spannable required = new SpannableString("No Internet !");
+
+        required.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorPrimary)),0,required.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        builder.setTitle(required);
+        builder.setMessage("Please check your connection and try again !");
+        builder.setPositiveButton("OK", (dialog, which) -> {
+
+        });
+
+        builder.create();
+        builder.show();
+
+
     }
 }

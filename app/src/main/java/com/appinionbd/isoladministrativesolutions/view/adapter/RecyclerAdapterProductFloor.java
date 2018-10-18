@@ -82,20 +82,20 @@ public class RecyclerAdapterProductFloor extends RecyclerView.Adapter<RecyclerAd
 
         int quantity = 0 ;
         int quantityOld = 0 ;
-        FloorList floorList = new FloorList();
-        ItemHolder itemHolder = new ItemHolder();
+        FloorList floorSavedTemp = new FloorList();
+        ItemHolder itemHolderTemp = new ItemHolder();
 
         try(Realm realm = Realm.getDefaultInstance()){
 
             FloorSaved floorSaved = realm.where(FloorSaved.class).equalTo("id" , id).findFirst();
-            ItemHolder itemHolderTemp = realm.where(ItemHolder.class).equalTo("itemHolderId" , id).findFirst();
+            ItemHolder itemHolder = realm.where(ItemHolder.class).equalTo("itemHolderId" , id).findFirst();
 
-            itemHolder.setItemHolderId( floorSaved.getId() );
-            itemHolder.setItemId(floorSaved.getItemId());
-            itemHolder.setFloorId(floorSaved.getFloorId());
+            itemHolderTemp.setItemHolderId( floorSaved.getId() );
+            itemHolderTemp.setItemId( floorSaved.getItemId() );
+            itemHolderTemp.setFloorId( floorSaved.getFloorId() );
 
             if(itemHolderTemp == null){
-                itemHolder.setQuantity("0");
+                itemHolderTemp.setQuantity("0");
             }
             else
             {

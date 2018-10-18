@@ -44,4 +44,6 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     //WaveSwipeRefreshLayout
     implementation 'com.github.recruit-lifestyle:WaveSwipeRefreshLayout:1.6'
+    //Camera with qrcode
+    implementation 'com.github.KingsMentor:MobileVisionBarcodeScanner:2.0.0'
 }

@@ -14,9 +14,12 @@ public interface IHome {
         void networkError(String message);
 
         void otherError(String message);
+
+        void logoutSuccessful();
     }
     interface Presenter{
         void getRefreshData();
         void getDataWithoutWaiting();
+        void proceedToLogout();
     }
 }

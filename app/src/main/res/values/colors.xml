@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#0a61a9</color>
+    <color name="colorPrimaryDark">#00574b</color>
     <color name="colorAccent">#007AFF</color>
 
     <color name="white">#ffffff</color>
     <color name="drawable_color">#F6F6F6</color>
     <color name="black">#000000</color>
     <color name="gray">#e0e0e1</color>
+    <color name="light_gray">#eeeeef</color>
+    <color name="green">#95e8a4</color>
+
+    <array name="rect_color">
+        <item>@color/color_blue</item>
+        <item>@color/color_brown</item>
+        <item>@color/color_green</item>
+        <item>@color/divider_grey</item>
+        <item>@color/color_orange</item>
+    </array>
+
 </resources>
