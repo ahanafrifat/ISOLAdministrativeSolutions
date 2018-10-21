@@ -1,6 +1,7 @@
 package com.appinionbd.isoladministrativesolutions.view.productHome;
 
 import android.content.Intent;
+import android.support.design.button.MaterialButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,8 @@ import com.appinionbd.isoladministrativesolutions.model.dataHolder.FloorSaved;
 import com.appinionbd.isoladministrativesolutions.model.dataModel.Product;
 import com.appinionbd.isoladministrativesolutions.presenter.ProductFloorPresenter;
 import com.appinionbd.isoladministrativesolutions.view.adapter.RecyclerAdapterProductFloor;
+import com.appinionbd.isoladministrativesolutions.view.home.HomeActivity;
+import com.appinionbd.isoladministrativesolutions.view.proceedIssuance.ProceedIssuanceActivity;
 
 import java.util.List;
 
@@ -34,6 +37,9 @@ public class ProductHomeActivity extends AppCompatActivity implements IProductHo
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerAdapterProductFloor recyclerAdapterProductFloor;
 
+    private MaterialButton buttonAddToCart;
+    private MaterialButton buttonIssueNow;
+
     private IProductHome.Presenter iProductHomePresenter;
 
     @Override
@@ -50,6 +56,9 @@ public class ProductHomeActivity extends AppCompatActivity implements IProductHo
         textViewProductActivityName = findViewById(R.id.textView_product_activity_name);
         textViewProductActivityId = findViewById(R.id.textView_product_activity_id);
         recyclerViewProductFloor = findViewById(R.id.recyclerView_product_floor);
+
+        buttonAddToCart = findViewById(R.id.button_add_to_cart);
+        buttonIssueNow = findViewById(R.id.button_issue_now);
 
         iProductHomePresenter.getProductFloorWithoutWaiting(itemCode);
     }
@@ -68,11 +77,21 @@ public class ProductHomeActivity extends AppCompatActivity implements IProductHo
 
             textViewProductActivityName.setText(itemName);
             textViewProductActivityId.setText(itemCode);
+
+            buttonAddToCart.setOnClickListener(v -> {
+                gotoHomeActivity();
+            });
+
+            buttonIssueNow.setOnClickListener(v -> {
+                gotoIssueNowActivity();
+            });
         }
         catch (Exception e){
             AppUtil.log("ProductHomeActivity" , e.getMessage());
         }
     }
+
+
 
     @Override
     public void showProductFloor(List<FloorSaved> floorSaveds) {
@@ -91,6 +110,16 @@ public class ProductHomeActivity extends AppCompatActivity implements IProductHo
         catch (Exception e){
             AppUtil.log("ProductHomeActivity", e.getMessage());
         }
+    }
+
+    private void gotoHomeActivity() {
+        Intent intent = new Intent(this , HomeActivity.class);
+        startActivity(intent);
+    }
+
+    private void gotoIssueNowActivity() {
+        Intent intent = new Intent(this , ProceedIssuanceActivity.class);
+        startActivity(intent);
     }
 
     @Override

@@ -24,6 +24,7 @@ import com.appinionbd.isoladministrativesolutions.model.dataModel.Product;
 import com.appinionbd.isoladministrativesolutions.presenter.HomePresenter;
 import com.appinionbd.isoladministrativesolutions.view.adapter.RecyclerAdapterProductLibrary;
 import com.appinionbd.isoladministrativesolutions.view.camera.CameraActivity;
+import com.appinionbd.isoladministrativesolutions.view.cart.CartActivity;
 import com.appinionbd.isoladministrativesolutions.view.login.LoginActivity;
 import com.appinionbd.isoladministrativesolutions.view.productHome.ProductHomeActivity;
 
@@ -38,6 +39,7 @@ public class HomeActivity extends AppCompatActivity implements IHome.View {
 
     private ImageView imageViewScan;
     private ImageView imageViewLogout;
+    private ImageView imageViewCart;
 
     private AutoCompleteTextView autoCompleteTextViewSearch;
     private SwipeRefreshLayout swipeRefreshLayoutProduct;
@@ -66,6 +68,7 @@ public class HomeActivity extends AppCompatActivity implements IHome.View {
 
         imageViewScan = findViewById(R.id.imageView_scan);
         imageViewLogout = findViewById(R.id.imageView_logout);
+        imageViewCart = findViewById(R.id.imageView_cart);
 
         swipeRefreshLayoutProduct = findViewById(R.id.waveSwipeRefreshLayout_product);
         recyclerViewProduct = findViewById(R.id.recyclerView_product);
@@ -87,6 +90,10 @@ public class HomeActivity extends AppCompatActivity implements IHome.View {
         imageViewScan.setOnClickListener(v -> gotoCamera());
         imageViewLogout.setOnClickListener(v -> {
             showAlertDialogForLogout();
+        });
+
+        imageViewCart.setOnClickListener(v -> {
+            gotoCartActivity();
         });
     }
 
@@ -195,6 +202,16 @@ public class HomeActivity extends AppCompatActivity implements IHome.View {
     private void gotoLogout(){
         try{
             Intent intent = new Intent(this , LoginActivity.class);
+            startActivity(intent);
+        }
+        catch (Exception e){
+            Toasty.error(this , "Error in gotoCamera!" , Toast.LENGTH_LONG , true).show();
+        }
+    }
+
+    private void gotoCartActivity() {
+        try{
+            Intent intent = new Intent(this , CartActivity.class);
             startActivity(intent);
         }
         catch (Exception e){

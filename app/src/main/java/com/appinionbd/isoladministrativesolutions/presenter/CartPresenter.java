@@ -12,4 +12,9 @@ public class CartPresenter implements ICart.Presenter {
     public CartPresenter(ICart.View view) {
         this.view = view;
     }
+
+    @Override
+    public void getCartWithoutWaiting() {
+
+    }
 }
