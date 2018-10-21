@@ -6,7 +6,7 @@ import io.realm.annotations.PrimaryKey;
 public class FloorSaved extends RealmObject {
 
     @PrimaryKey
-    private String id;
+    private String floorSavedId;
     private String floorId;
     private String itemId;
     private String quantity;
@@ -15,20 +15,20 @@ public class FloorSaved extends RealmObject {
     public FloorSaved() {
     }
 
-    public FloorSaved(String id, String floorId, String itemId, String quantity, String floorNo) {
-        this.id = id;
+    public FloorSaved(String floorSavedId, String floorId, String itemId, String quantity, String floorNo) {
+        this.floorSavedId = floorSavedId;
         this.floorId = floorId;
         this.itemId = itemId;
         this.quantity = quantity;
         this.floorNo = floorNo;
     }
 
-    public String getId() {
-        return id;
+    public String getFloorSavedId() {
+        return floorSavedId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setFloorSavedId(String floorSavedId) {
+        this.floorSavedId = floorSavedId;
     }
 
     public String getFloorId() {

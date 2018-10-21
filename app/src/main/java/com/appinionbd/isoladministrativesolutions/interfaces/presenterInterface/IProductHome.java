@@ -17,9 +17,9 @@ public interface IProductHome {
     }
     interface Presenter{
 
-        void getRefreshDataOfProductFloor(String itemId);
+        void getRefreshDataOfProductFloor(String itemCode);
 
-        void getProductFloorWithoutWaiting(String itemId);
+        void getProductFloorWithoutWaiting(String itemCode);
 
     }
 }

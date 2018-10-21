@@ -13,7 +13,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public class ApiClient {
-    private static final String BASE_URL = "http://10.10.20.101";
+    private static final String BASE_URL = "http://10.10.20.29";
 
     private static Retrofit retrofit = null;
 

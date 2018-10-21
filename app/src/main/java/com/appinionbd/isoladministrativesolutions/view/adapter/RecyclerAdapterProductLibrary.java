@@ -74,7 +74,7 @@ public class RecyclerAdapterProductLibrary extends RecyclerView.Adapter<Recycler
             textViewId = itemView.findViewById(R.id.textView_id);
 
             cardViewProduct.setOnClickListener(v -> {
-                iRecyclerAdapterProductLibrary.productClicked(productList.get(getLayoutPosition()).getItemId() );
+                iRecyclerAdapterProductLibrary.productClicked(productList.get(getLayoutPosition()).getItemCode() );
             });
         }
     }

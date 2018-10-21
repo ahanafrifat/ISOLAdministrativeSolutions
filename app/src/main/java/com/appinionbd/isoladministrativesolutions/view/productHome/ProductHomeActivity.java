@@ -23,7 +23,7 @@ import io.realm.Realm;
 
 public class ProductHomeActivity extends AppCompatActivity implements IProductHome.View {
 
-    private String itemId;
+    private String itemCode;
     private String itemName;
 
     private TextView textViewProductActivityName;
@@ -43,7 +43,7 @@ public class ProductHomeActivity extends AppCompatActivity implements IProductHo
         Realm.init(this);
 
         Intent intent = getIntent();
-        itemId = intent.getStringExtra("itemId");
+        itemCode = intent.getStringExtra("itemCode");
 
         iProductHomePresenter = new ProductFloorPresenter(this);
 
@@ -51,20 +51,27 @@ public class ProductHomeActivity extends AppCompatActivity implements IProductHo
         textViewProductActivityId = findViewById(R.id.textView_product_activity_id);
         recyclerViewProductFloor = findViewById(R.id.recyclerView_product_floor);
 
-        iProductHomePresenter.getProductFloorWithoutWaiting(itemId);
+        iProductHomePresenter.getProductFloorWithoutWaiting(itemCode);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        try(Realm realm = Realm.getDefaultInstance()){
-            Product product = realm.where(Product.class).equalTo("itemId" , itemId).findFirst();
-            itemName = product.getItemName();
-        }
+        try {
+            iProductHomePresenter.getProductFloorWithoutWaiting(itemCode);
 
-        textViewProductActivityName.setText(itemName);
-        textViewProductActivityId.setText(itemId);
+            try (Realm realm = Realm.getDefaultInstance()) {
+                Product product = realm.where(Product.class).equalTo("itemCode", itemCode).findFirst();
+                itemName = product.getItemName();
+            }
+
+            textViewProductActivityName.setText(itemName);
+            textViewProductActivityId.setText(itemCode);
+        }
+        catch (Exception e){
+            AppUtil.log("ProductHomeActivity" , e.getMessage());
+        }
     }
 
     @Override

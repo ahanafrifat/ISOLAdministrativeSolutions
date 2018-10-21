@@ -10,11 +10,9 @@ import android.widget.TextView;
 
 import com.appinionbd.isoladministrativesolutions.R;
 import com.appinionbd.isoladministrativesolutions.model.dataHolder.FloorSaved;
-import com.appinionbd.isoladministrativesolutions.model.dataHolder.ItemHolder;
-import com.appinionbd.isoladministrativesolutions.model.dataModel.Floor;
-import com.appinionbd.isoladministrativesolutions.model.dataModel.FloorList;
-import com.appinionbd.isoladministrativesolutions.model.dataModel.ItemList;
+import com.appinionbd.isoladministrativesolutions.model.dataHolder.SavedProduct;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
@@ -46,11 +44,20 @@ public class RecyclerAdapterProductFloor extends RecyclerView.Adapter<RecyclerAd
 //        holder.textViewQuantity.setText(floorSaveds.get(position).getQuantity());
 
         holder.imageViewUp.setOnClickListener(v -> {
-            addQuantity(floorSaveds.get(position).getId() , holder.textViewFloorAvailableProduct ,floorSaveds.get(position).getFloorId() , holder.textViewQuantity);
+            addQuantity(holder.textViewFloorAvailableProduct ,
+                    holder.textViewQuantity ,
+                    floorSaveds.get(position).getFloorSavedId(),
+                    floorSaveds.get(position).getFloorId() ,
+                    floorSaveds.get(position).getItemId()
+                    );
         });
 
         holder.imageViewDown.setOnClickListener(v -> {
-
+            subtractQuantity(holder.textViewFloorAvailableProduct ,
+                    holder.textViewQuantity ,
+                    floorSaveds.get(position).getFloorSavedId(),
+                    floorSaveds.get(position).getFloorId() ,
+                    floorSaveds.get(position).getItemId());
         });
     }
 
@@ -78,62 +85,103 @@ public class RecyclerAdapterProductFloor extends RecyclerView.Adapter<RecyclerAd
         }
     }
 
-    private void addQuantity(String id, TextView textViewFloorAvailableProduct, String floorId, TextView textViewQuantity) {
+    private void addQuantity(TextView textViewFloorAvailableProduct, TextView textViewQuantity, String floorSavedId, String floorId, String itemId) {
 
-        int quantity = 0 ;
-        int quantityOld = 0 ;
-        FloorList floorSavedTemp = new FloorList();
-        ItemHolder itemHolderTemp = new ItemHolder();
+        SavedProduct savedProduct = new SavedProduct();
 
-        try(Realm realm = Realm.getDefaultInstance()){
+        try (Realm realm = Realm.getDefaultInstance()) {
 
-            FloorSaved floorSaved = realm.where(FloorSaved.class).equalTo("id" , id).findFirst();
-            ItemHolder itemHolder = realm.where(ItemHolder.class).equalTo("itemHolderId" , id).findFirst();
+            SavedProduct savedProductTemp = realm.where(SavedProduct.class).equalTo("savedProductId" , floorSavedId).findFirst();
 
-            itemHolderTemp.setItemHolderId( floorSaved.getId() );
-            itemHolderTemp.setItemId( floorSaved.getItemId() );
-            itemHolderTemp.setFloorId( floorSaved.getFloorId() );
-
-            if(itemHolderTemp == null){
-                itemHolderTemp.setQuantity("0");
-            }
-            else
-            {
-                quantity = Integer.parseInt(itemHolderTemp.getQuantity());
-                quantity = quantity + 1 ;
-                itemHolder.setQuantity(String.valueOf(quantity));
-
-//                textViewFloorAvailableProduct.setText();
-                textViewQuantity.setText(quantity);
-            }
-
-        }
-    }
-
-    private void subtractQuantity(String id, TextView textViewFloorAvailableProduct) {
-
-        int quantity = 0 ;
-
-        try(Realm realm = Realm.getDefaultInstance()){
-
-            FloorSaved floorSaved = realm.where(FloorSaved.class).equalTo("id" , id).findFirst();
-            quantity = Integer.parseInt(floorSaved.getQuantity());
-
-            if(quantity > 0) {
-                quantity = quantity + 1;
-                floorSaved.setQuantity(String.valueOf(quantity));
-                textViewFloorAvailableProduct.setText(String.valueOf(quantity));
-                realm.executeTransaction(realm1 -> {
-                    realm1.insertOrUpdate(floorSaved);
-                });
-                notifyDataSetChanged();
+            if(savedProductTemp == null){
+                savedProduct.setSavedProductId(floorSavedId);
+                savedProduct.setItemId(itemId);
+                savedProduct.setFloorId(floorId);
+                savedProduct.setQuantity("1");
+                textViewQuantity.setText("1");
             }
             else{
 
+                int tempQuantity = Integer.parseInt(savedProductTemp.getQuantity()) ;
+
+                FloorSaved floorSaved = realm.where(FloorSaved.class).equalTo("floorSavedId" , floorSavedId).findFirst();
+
+                int higestQunatity = Integer.parseInt(floorSaved.getQuantity());
+
+                if(tempQuantity < higestQunatity  ) {
+
+                    savedProduct.setSavedProductId(floorSavedId);
+                    savedProduct.setItemId(itemId);
+                    savedProduct.setFloorId(floorId);
+
+                    int increaseTempQuantity = Integer.parseInt(savedProductTemp.getQuantity()) + 1;
+
+                    savedProduct.setQuantity( String.valueOf(increaseTempQuantity) );
+
+                    savedProduct.setQuantity( String.valueOf(increaseTempQuantity) );
+
+                    textViewQuantity.setText( String.valueOf(increaseTempQuantity) );
+                }
+                else{
+
+                }
             }
+
+            realm.executeTransaction(realm1 -> {
+                realm1.insertOrUpdate(savedProduct);
+            });
+
         }
     }
 
+    private void subtractQuantity(TextView textViewFloorAvailableProduct, TextView textViewQuantity, String floorSavedId, String floorId, String itemId) {
 
+        SavedProduct savedProduct = new SavedProduct();
+
+        try (Realm realm = Realm.getDefaultInstance()) {
+
+            SavedProduct savedProductTemp = realm.where(SavedProduct.class).equalTo("savedProductId" , floorSavedId).findFirst();
+
+            if(savedProductTemp == null){
+//                savedProduct.setSavedProductId(floorSavedId);
+//                savedProduct.setItemId(itemId);
+//                savedProduct.setFloorId(floorId);
+//                savedProduct.setQuantity("1");
+//                textViewQuantity.setText("1");
+            }
+            else{
+
+                int tempQuantity = Integer.parseInt(savedProductTemp.getQuantity()) ;
+
+//                FloorSaved floorSaved = realm.where(FloorSaved.class).equalTo("floorSavedId" , floorSavedId).findFirst();
+//
+//                int higestQunatity = Integer.parseInt(floorSaved.getQuantity());
+
+                if(tempQuantity > 0  ) {
+
+                    savedProduct.setSavedProductId(floorSavedId);
+                    savedProduct.setItemId(itemId);
+                    savedProduct.setFloorId(floorId);
+
+                    int increaseTempQuantity = Integer.parseInt(savedProductTemp.getQuantity()) - 1;
+
+                    savedProduct.setQuantity( String.valueOf(increaseTempQuantity) );
+
+                    savedProduct.setQuantity( String.valueOf(increaseTempQuantity) );
+
+                    textViewQuantity.setText( String.valueOf(increaseTempQuantity) );
+                }
+                else{
+
+                }
+            }
+
+            realm.executeTransaction(realm1 -> {
+                realm1.insertOrUpdate(savedProduct);
+            });
+
+        }
+
+    }
 
 }

@@ -5,22 +5,22 @@ import com.google.gson.annotations.SerializedName;
 
 public class SearchItem {
 
-    @SerializedName("item_id")
+    @SerializedName("item_code")
     @Expose
-    private String itemId;
+    private String itemCode;
 
     public SearchItem() {
     }
 
-    public SearchItem(String itemId) {
-        this.itemId = itemId;
+    public SearchItem(String itemCode) {
+        this.itemCode = itemCode;
     }
 
-    public String getItemId() {
-        return itemId;
+    public String getItemCode() {
+        return itemCode;
     }
 
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
+    public void setItemCode(String itemCode) {
+        this.itemCode = itemCode;
     }
 }

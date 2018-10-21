@@ -106,8 +106,8 @@ public class HomeActivity extends AppCompatActivity implements IHome.View {
 
                 recyclerAdapterProductLibrary = new RecyclerAdapterProductLibrary(this.productList, this, new IRecyclerAdapterProductLibrary() {
                     @Override
-                    public void productClicked(String itemId) {
-                        gotoProductHome(itemId);
+                    public void productClicked(String itemCode) {
+                        gotoProductHome(itemCode);
                     }
                 });
                 recyclerAdapterProductLibrary.notifyDataSetChanged();
@@ -171,10 +171,10 @@ public class HomeActivity extends AppCompatActivity implements IHome.View {
         }
     }
 
-    private void gotoProductHome(String itemId) {
+    private void gotoProductHome(String itemCode) {
         try {
             Intent intent = new Intent(this , ProductHomeActivity.class);
-            intent.putExtra("itemId", itemId);
+            intent.putExtra("itemCode", itemCode);
             startActivity(intent);
         }
         catch (Exception e){

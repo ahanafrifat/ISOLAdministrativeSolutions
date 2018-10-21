@@ -3,30 +3,29 @@ package com.appinionbd.isoladministrativesolutions.model.dataHolder;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class ItemHolder extends RealmObject {
-
+public class SavedProduct extends RealmObject {
     @PrimaryKey
-    private String itemHolderId;
+    private String savedProductId;
     private String itemId;
     private String floorId;
     private String quantity;
 
-    public ItemHolder() {
+    public SavedProduct() {
     }
 
-    public ItemHolder(String itemHolderId, String itemId, String floorId, String quantity) {
-        this.itemHolderId = itemHolderId;
+    public SavedProduct(String savedProductId, String itemId, String floorId, String quantity) {
+        this.savedProductId = savedProductId;
         this.itemId = itemId;
         this.floorId = floorId;
         this.quantity = quantity;
     }
 
-    public String getItemHolderId() {
-        return itemHolderId;
+    public String getSavedProductId() {
+        return savedProductId;
     }
 
-    public void setItemHolderId(String itemHolderId) {
-        this.itemHolderId = itemHolderId;
+    public void setSavedProductId(String savedProductId) {
+        this.savedProductId = savedProductId;
     }
 
     public String getItemId() {
