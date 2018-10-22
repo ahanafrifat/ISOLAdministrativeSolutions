@@ -42,41 +42,56 @@ public class ProceedIssuancePresenter implements IProceedIssuance.Presenter {
 
         Issuance issuance = new Issuance();
         List<ItemList> itemLists = new ArrayList<>();
-        List<FloorList> floorLists = new ArrayList<>();
 
         String token= "";
         try(Realm realmInstance = Realm.getDefaultInstance()) {
             UserToken userToken = realmInstance.where(UserToken.class).findFirst();
             token = userToken.getToken();
 
-//            UserInfo userInfo = realmInstance.where(UserInfo.class).findFirst();
-//
-//            issuance.setVendorName(userInfo.getUserName());
-//            issuance.setUserId(userInfo.getUserId());
-//            issuance.setRemark(comment);
-//
-//            RealmResults<SavedProduct> savedProductRealmResults = realmInstance.where(SavedProduct.class).findAll();
-//
-//            String tempItemCode = "";
-//
-//            for(SavedProduct savedProduct : savedProductRealmResults){
-//
-//                RealmResults<SavedProduct> savedProductRealmResultsTemp = realmInstance
-//                        .where(SavedProduct.class)
-//                        .equalTo("itemCode" , savedProduct.getItemCode())
-//                        .findAll();
-//
-//                if(tempItemCode == "") {
-//
-//                    tempItemCode = savedProduct.getItemCode();
-//                    ItemList itemList = new ItemList();
-//                    itemList.setItemCode(savedProduct.getItemCode());
-//
-//                    FloorList floorListTemp = new FloorList();
-//                }
-//
-//
-//            }
+            UserInfo userInfo = realmInstance.where(UserInfo.class).findFirst();
+
+            issuance.setVendorName(userInfo.getUserName());
+            issuance.setUserId(userInfo.getUserId());
+            issuance.setRemark(comment);
+
+            RealmResults<SavedProduct> savedProductRealmResults = realmInstance.where(SavedProduct.class).findAll();
+
+            String tempLastItemCode = "";
+            String tempNewItemCode = "";
+            boolean check = false;
+
+            for(SavedProduct savedProduct : savedProductRealmResults){
+
+                tempNewItemCode = savedProduct.getItemCode();
+
+                if( ! tempNewItemCode.equals(tempLastItemCode) ) {
+
+                    ItemList itemList = new ItemList();
+
+                    itemList.setItemCode(savedProduct.getItemCode());
+
+                    RealmResults<SavedProduct> savedProductRealmResultsTemp = realmInstance
+                            .where(SavedProduct.class)
+                            .equalTo("itemCode", savedProduct.getItemCode())
+                            .findAll();
+
+                    List<FloorList> floorListsTemp = new ArrayList<>();
+
+                    for (SavedProduct savedProductTemp : savedProductRealmResultsTemp) {
+
+                        FloorList floorList = new FloorList();
+                        floorList.setFloorId(savedProductTemp.getFloorId());
+                        floorList.setQuantity(savedProductTemp.getQuantity());
+                        floorListsTemp.add(floorList);
+
+                    }
+
+                    itemLists.add(itemList);
+                    tempLastItemCode = savedProduct.getItemCode();
+                }
+            }
+
+            issuance.setItemList(itemLists);
         }
 
         RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
