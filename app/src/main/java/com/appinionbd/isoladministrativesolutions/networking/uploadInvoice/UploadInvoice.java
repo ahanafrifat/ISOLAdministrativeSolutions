@@ -31,6 +31,9 @@ public class UploadInvoice {
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
                 if(response.isSuccessful() && response.body()!=null)
                     Log.d("Issuance", response.body().getMessage());
+                else{
+                    Log.d("Issuance", response.body().getMessage() + " Error : ");
+                }
 
             }
 

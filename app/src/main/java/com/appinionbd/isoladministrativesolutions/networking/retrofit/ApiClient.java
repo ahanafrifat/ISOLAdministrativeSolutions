@@ -2,6 +2,8 @@ package com.appinionbd.isoladministrativesolutions.networking.retrofit;
 
 import com.appinionbd.isoladministrativesolutions.model.dataModel.APIAuth;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -23,6 +25,12 @@ public class ApiClient {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         okHttpClientBuilder.addInterceptor(logging);
+
+        okHttpClientBuilder
+                .connectTimeout(5, TimeUnit.MINUTES)
+                .readTimeout(5, TimeUnit.MINUTES)
+                .writeTimeout(5, TimeUnit.MINUTES)
+                .build();
 
         if(retrofit == null){
             retrofit = new Retrofit.Builder()

@@ -7,9 +7,9 @@ import java.util.List;
 
 public class ItemList{
 
-    @SerializedName("item_id")
+    @SerializedName("item_code")
     @Expose
-    private String itemId;
+    private String itemCode;
     @SerializedName("floor_list")
     @Expose
     private List<FloorList> floorList = null;
@@ -17,17 +17,17 @@ public class ItemList{
     public ItemList() {
     }
 
-    public ItemList(String itemId, List<FloorList> floorList) {
-        this.itemId = itemId;
+    public ItemList(String itemCode, List<FloorList> floorList) {
+        this.itemCode = itemCode;
         this.floorList = floorList;
     }
 
-    public String getItemId() {
-        return itemId;
+    public String getItemCode() {
+        return itemCode;
     }
 
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
+    public void setItemCode(String itemCode) {
+        this.itemCode = itemCode;
     }
 
     public List<FloorList> getFloorList() {

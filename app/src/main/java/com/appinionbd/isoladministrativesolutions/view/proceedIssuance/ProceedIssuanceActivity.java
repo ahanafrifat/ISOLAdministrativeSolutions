@@ -1,12 +1,17 @@
 package com.appinionbd.isoladministrativesolutions.view.proceedIssuance;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +41,8 @@ public class ProceedIssuanceActivity extends AppCompatActivity implements IProce
     private MaterialButton materialButtonProceedIssuance;
 
     private final int RESULT_LOAD_IMG = 9001;
+    private static final int PICK_FROM_GALLERY = 1;
+
     private IProceedIssuance.Presenter proceedIssuancePresenter;
     private boolean checkImage;
 
@@ -65,11 +72,47 @@ public class ProceedIssuanceActivity extends AppCompatActivity implements IProce
         checkImage = false;
 
         linearLayoutAddInvoice.setOnClickListener(v -> {
-            getImageFromGallery();
+//            getImageFromGallery();
+            checkAppPermission();
         });
 
 
-        materialButtonProceedIssuance.setOnClickListener(v -> checkAllTheField());
+        materialButtonProceedIssuance.setOnClickListener(v -> {
+            checkAllTheField();
+        });
+
+    }
+
+
+
+    private void checkAppPermission() {
+        try {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
+            } else {
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case PICK_FROM_GALLERY:
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
+                    getImageFromGallery();
+                } else {
+                    //do something like displaying a message that he didn`t allow the app to access gallery and you wont be able to let him select from gallery
+                }
+                break;
+        }
     }
 
     private void checkAllTheField() {
@@ -81,18 +124,6 @@ public class ProceedIssuanceActivity extends AppCompatActivity implements IProce
         else{
             Toast.makeText(this,"file is null", Toast.LENGTH_LONG).show();
         }
-//        if( !editTextVendorName.getText().toString().isEmpty() ||
-//                !editTextVendorRemarks.getText().toString().isEmpty() ||
-//                !checkImage){
-//            editTextVendorName.setError("Empty Field");
-//            editTextVendorRemarks.setError("Empty Field");
-//        }
-//        else{
-//            proceedIssuancePresenter.proceedUpload(getApplicationContext(), editTextVendorName.getText().toString() ,
-//                    editTextVendorRemarks.getText().toString(),
-//                    selectedFinalImage
-//                    );
-//        }
     }
 
     private void getImageFromGallery() {
@@ -122,7 +153,7 @@ public class ProceedIssuanceActivity extends AppCompatActivity implements IProce
                 String filePath = cursor.getString(columnIndex);
                 cursor.close();
                 file = new File(filePath);
-                Log.d("====", file.getAbsolutePath());
+                Log.d("imagelocation", file.getAbsolutePath());
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
