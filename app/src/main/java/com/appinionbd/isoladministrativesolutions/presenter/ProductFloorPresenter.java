@@ -49,6 +49,7 @@ public class ProductFloorPresenter implements IProductHome.Presenter {
     private void getProductFloor(String itemCode) {
 
         String token= "";
+
         try(Realm realmInstance = Realm.getDefaultInstance()) {
             UserToken userToken = realmInstance.where(UserToken.class).findFirst();
             token = userToken.getToken();
@@ -72,7 +73,7 @@ public class ProductFloorPresenter implements IProductHome.Presenter {
 
                         floorSaved.setFloorSavedId(itemCode + "_" + floor.getFloorId());
                         floorSaved.setFloorId(floor.getFloorId());
-                        floorSaved.setItemId(itemCode);
+                        floorSaved.setItemCode(itemCode);
                         floorSaved.setQuantity(floor.getQuantity());
                         floorSaved.setFloorNo(floor.getFloorNo());
 

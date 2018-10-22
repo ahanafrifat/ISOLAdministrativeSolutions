@@ -1,18 +1,24 @@
 package com.appinionbd.isoladministrativesolutions.networking.retrofit;
 
 import com.appinionbd.isoladministrativesolutions.model.dataModel.APIAuth;
+import com.appinionbd.isoladministrativesolutions.model.dataModel.Issuance;
 import com.appinionbd.isoladministrativesolutions.model.dataModel.LoginAuth;
 import com.appinionbd.isoladministrativesolutions.model.dataModel.LoginCredential;
 import com.appinionbd.isoladministrativesolutions.model.dataModel.ProductLibrary;
+import com.appinionbd.isoladministrativesolutions.model.dataModel.ResponseModel;
 import com.appinionbd.isoladministrativesolutions.model.dataModel.SearchItem;
 import com.appinionbd.isoladministrativesolutions.model.dataModel.SingleProductFloorList;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
@@ -38,4 +44,10 @@ public interface ApiInterface {
     @POST("/isol_api/api/product/floor_list")
     Call<SingleProductFloorList> singleProductFloorListCall(@Header("token") String token,
                                                             @Body SearchItem searchItem);
+    @Multipart
+    @Headers("Content-Type: application/json")
+    @POST("/isol_api/api/product/proceed_issuance")
+    Call<ResponseModel> uploadImage(@Header("token") String token, @Part MultipartBody.Part image,@Part("description") RequestBody name);
+
+
 }

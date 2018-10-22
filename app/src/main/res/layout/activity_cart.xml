@@ -46,13 +46,16 @@
         android:layout_below="@+id/relativeLayout_toolbar"
         android:layout_centerHorizontal="true" />
 
-    <Button
+    <android.support.design.button.MaterialButton
         android:id="@+id/materialButton_continue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Button" />
+        app:icon="@drawable/ic_done_all_24dp"
+        app:iconGravity="textStart"
+        app:iconPadding="16dp"
+        android:text="continue Issuance" />
 
 
 </RelativeLayout>

@@ -110,8 +110,9 @@
             android:clickable="true"
             android:background="@drawable/edittext_design_rectangle">
             <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:id="@+id/imageView_invoice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_camera_alt_24dp"/>
             <TextView
                 android:layout_width="wrap_content"

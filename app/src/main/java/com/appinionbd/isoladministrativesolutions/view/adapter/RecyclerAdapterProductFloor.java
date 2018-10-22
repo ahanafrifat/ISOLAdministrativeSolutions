@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.appinionbd.isoladministrativesolutions.R;
 import com.appinionbd.isoladministrativesolutions.model.dataHolder.FloorSaved;
 import com.appinionbd.isoladministrativesolutions.model.dataHolder.SavedProduct;
+import com.appinionbd.isoladministrativesolutions.model.dataModel.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,7 @@ public class RecyclerAdapterProductFloor extends RecyclerView.Adapter<RecyclerAd
                     holder.textViewQuantity ,
                     floorSaveds.get(position).getFloorSavedId(),
                     floorSaveds.get(position).getFloorId() ,
-                    floorSaveds.get(position).getItemId()
+                    floorSaveds.get(position).getItemCode()
                     );
         });
 
@@ -57,7 +58,7 @@ public class RecyclerAdapterProductFloor extends RecyclerView.Adapter<RecyclerAd
                     holder.textViewQuantity ,
                     floorSaveds.get(position).getFloorSavedId(),
                     floorSaveds.get(position).getFloorId() ,
-                    floorSaveds.get(position).getItemId());
+                    floorSaveds.get(position).getItemCode());
         });
     }
 
@@ -85,7 +86,7 @@ public class RecyclerAdapterProductFloor extends RecyclerView.Adapter<RecyclerAd
         }
     }
 
-    private void addQuantity(TextView textViewFloorAvailableProduct, TextView textViewQuantity, String floorSavedId, String floorId, String itemId) {
+    private void addQuantity(TextView textViewFloorAvailableProduct, TextView textViewQuantity, String floorSavedId, String floorId, String itemCode) {
 
         SavedProduct savedProduct = new SavedProduct();
 
@@ -94,9 +95,13 @@ public class RecyclerAdapterProductFloor extends RecyclerView.Adapter<RecyclerAd
             SavedProduct savedProductTemp = realm.where(SavedProduct.class).equalTo("savedProductId" , floorSavedId).findFirst();
 
             if(savedProductTemp == null){
+
+                Product product = realm.where(Product.class).equalTo("itemCode" , itemCode).findFirst();
                 savedProduct.setSavedProductId(floorSavedId);
-                savedProduct.setItemId(itemId);
+                savedProduct.setItemId(product.getItemId());
                 savedProduct.setFloorId(floorId);
+                savedProduct.setItemCode(itemCode);
+                savedProduct.setItemName(product.getItemName());
                 savedProduct.setQuantity("1");
                 textViewQuantity.setText("1");
             }
@@ -110,9 +115,13 @@ public class RecyclerAdapterProductFloor extends RecyclerView.Adapter<RecyclerAd
 
                 if(tempQuantity < higestQunatity  ) {
 
+                    Product product = realm.where(Product.class).equalTo("itemCode" , itemCode).findFirst();
+
                     savedProduct.setSavedProductId(floorSavedId);
-                    savedProduct.setItemId(itemId);
+                    savedProduct.setItemId(product.getItemId());
                     savedProduct.setFloorId(floorId);
+                    savedProduct.setItemCode(itemCode);
+                    savedProduct.setItemName(product.getItemName());
 
                     int increaseTempQuantity = Integer.parseInt(savedProductTemp.getQuantity()) + 1;
 
@@ -134,7 +143,7 @@ public class RecyclerAdapterProductFloor extends RecyclerView.Adapter<RecyclerAd
         }
     }
 
-    private void subtractQuantity(TextView textViewFloorAvailableProduct, TextView textViewQuantity, String floorSavedId, String floorId, String itemId) {
+    private void subtractQuantity(TextView textViewFloorAvailableProduct, TextView textViewQuantity, String floorSavedId, String floorId, String itemCode) {
 
         SavedProduct savedProduct = new SavedProduct();
 
@@ -159,9 +168,13 @@ public class RecyclerAdapterProductFloor extends RecyclerView.Adapter<RecyclerAd
 
                 if(tempQuantity > 0  ) {
 
+                    Product product = realm.where(Product.class).equalTo("itemCode" , itemCode).findFirst();
+
                     savedProduct.setSavedProductId(floorSavedId);
-                    savedProduct.setItemId(itemId);
+                    savedProduct.setItemId(product.getItemId());
                     savedProduct.setFloorId(floorId);
+                    savedProduct.setItemCode(itemCode);
+                    savedProduct.setItemName(product.getItemName());
 
                     int increaseTempQuantity = Integer.parseInt(savedProductTemp.getQuantity()) - 1;
 

@@ -51,4 +51,5 @@ public class Product extends RealmObject {
     public void setItemId(String itemId) {
         this.itemId = itemId;
     }
+
 }

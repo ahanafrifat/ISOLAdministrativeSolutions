@@ -7,15 +7,19 @@ public class SavedProduct extends RealmObject {
     @PrimaryKey
     private String savedProductId;
     private String itemId;
+    private String itemCode;
+    private String itemName;
     private String floorId;
     private String quantity;
 
     public SavedProduct() {
     }
 
-    public SavedProduct(String savedProductId, String itemId, String floorId, String quantity) {
+    public SavedProduct(String savedProductId, String itemId, String itemCode, String itemName, String floorId, String quantity) {
         this.savedProductId = savedProductId;
         this.itemId = itemId;
+        this.itemCode = itemCode;
+        this.itemName = itemName;
         this.floorId = floorId;
         this.quantity = quantity;
     }
@@ -34,6 +38,22 @@ public class SavedProduct extends RealmObject {
 
     public void setItemId(String itemId) {
         this.itemId = itemId;
+    }
+
+    public String getItemCode() {
+        return itemCode;
+    }
+
+    public void setItemCode(String itemCode) {
+        this.itemCode = itemCode;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
     public String getFloorId() {
